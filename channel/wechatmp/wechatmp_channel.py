@@ -23,6 +23,9 @@ from common.utils import split_string_by_utf8_length
 from config import conf
 from voice.audio_convert import any_to_mp3, split_audio
 
+
+from bot.session_manager import ConversationManager
+
 # If using SSL, uncomment the following lines, and modify the certificate path.
 # from cheroot.server import HTTPServer
 # from cheroot.ssl.builtin import BuiltinSSLAdapter
@@ -82,8 +85,19 @@ class WechatMPChannel(ChatChannel):
         if self.passive_reply:
             if reply.type == ReplyType.TEXT or reply.type == ReplyType.INFO or reply.type == ReplyType.ERROR:
                 reply_text = reply.content
+
+                # 加工数据
+                conversation_manager = ConversationManager(receiver)
+                json_data = conversation_manager.GetLastResetData()
+
+                new_reply_text = reply_text + " " + str(json_data)
+
                 logger.info("[wechatmp] text cached, receiver {}\n{}".format(receiver, reply_text))
+
+
                 self.cache_dict[receiver].append(("text", reply_text))
+                # self.cache_dict[receiver].append(("text", new_reply_text))
+
             elif reply.type == ReplyType.VOICE:
                 voice_file_path = reply.content
                 duration, files = split_audio(voice_file_path, 60 * 1000)
@@ -105,7 +119,6 @@ class WechatMPChannel(ChatChannel):
                     media_id = response["media_id"]
                     logger.info("[wechatmp] voice uploaded, receiver {}, media_id {}".format(receiver, media_id))
                     self.cache_dict[receiver].append(("voice", media_id))
-
             elif reply.type == ReplyType.IMAGE_URL:  # 从网络下载图片
                 img_url = reply.content
                 pic_res = requests.get(img_url, stream=True)

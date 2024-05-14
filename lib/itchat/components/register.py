@@ -63,6 +63,7 @@ def configured_reply(self):
                 r = replyFn(msg)
                 if r is not None:
                     self.send(r, msg.get('FromUserName'))
+                    logger.info("-----------------------我要瘋了------------------------------")
             except:
                 logger.warning(traceback.format_exc())
 

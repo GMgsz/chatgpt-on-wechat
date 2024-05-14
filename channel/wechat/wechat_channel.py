@@ -29,7 +29,9 @@ from lib.itchat.content import *
 @itchat.msg_register([TEXT, VOICE, PICTURE, NOTE, ATTACHMENT, SHARING])
 def handler_single_msg(msg):
     try:
+
         cmsg = WechatMessage(msg, False)
+
     except NotImplementedError as e:
         logger.debug("[WX]single message {} skipped: {}".format(msg["MsgId"], e))
         return None

@@ -1,8 +1,10 @@
 {
   "channel_type": "wx",
-  "model": "",
+  "model": "glm-4",
+  "zhipu_ai_api_key": "28c5474224ebf4d800ed045f51d55491.0JhEaJzMxWEfWLJF",
+  "zhipu_ai_api_base": "https://open.bigmodel.cn/api/paas/v4",
   "open_ai_api_key": "YOUR API KEY",
-  "claude_api_key": "YOUR API KEY",
+  "claude_api_key": "sk-LYysV7132qg5gbdfG9Woz4Ehhs9WMaNAa4qF9hRen1J5Pc3s",
   "text_to_image": "dall-e-2",
   "voice_to_text": "openai",
   "text_to_voice": "openai",

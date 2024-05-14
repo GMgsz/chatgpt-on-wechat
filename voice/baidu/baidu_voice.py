@@ -36,7 +36,7 @@ class BaiduVoice(Voice):
             config_path = os.path.join(curdir, "config.json")
             bconf = None
             if not os.path.exists(config_path):  # 如果没有配置文件，创建本地配置文件
-                bconf = {"lang": "zh", "ctp": 1, "spd": 5, "pit": 5, "vol": 5, "per": 0}
+                bconf = {"lang": "zh", "ctp": 1, "spd": 7, "pit": 5, "vol": 5, "per": 3}
                 with open(config_path, "w") as fw:
                     json.dump(bconf, fw, indent=4)
             else:

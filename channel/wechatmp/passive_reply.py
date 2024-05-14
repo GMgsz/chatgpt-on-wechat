@@ -37,6 +37,9 @@ class Query:
             else:
                 logger.debug("[wechatmp] Receive post data:\n" + message.decode("utf-8"))
             msg = parse_message(message)
+
+            logger.info("---------msg内容："+msg)
+
             if msg.type in ["text", "voice", "image"]:
                 wechatmp_msg = WeChatMPMessage(msg, client=channel.client)
                 from_user = wechatmp_msg.from_user_id
@@ -57,6 +60,7 @@ class Query:
                     # The first query begin
                     if msg.type == "voice" and wechatmp_msg.ctype == ContextType.TEXT and conf().get("voice_reply_voice", False):
                         context = channel._compose_context(wechatmp_msg.ctype, content, isgroup=False, desire_rtype=ReplyType.VOICE, msg=wechatmp_msg)
+
                     else:
                         context = channel._compose_context(wechatmp_msg.ctype, content, isgroup=False, msg=wechatmp_msg)
                     logger.debug("[wechatmp] context: {} {} {}".format(context, wechatmp_msg, supported))
